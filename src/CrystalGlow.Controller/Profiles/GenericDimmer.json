@@ -1,0 +1,6 @@
+{
+  "Name": "Generic Dimmer",
+  "Channels": [
+    { "Name": "Intensity", "Offset": 0 }
+  ]
+}

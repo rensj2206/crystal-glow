@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Documentation.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/CrystalGlow.Console/CrystalGlow.Console.csproj" />
+    <Project Path="src/CrystalGlow.Controller/CrystalGlow.Controller.csproj" />
+    <Project Path="src/CrystalGlow.Diagnostic/CrystalGlow.Diagnostic.csproj" />
+    <Project Path="src/CrystalGlow.Dmx/CrystalGlow.Dmx.csproj" />
+  </Folder>
+</Solution>

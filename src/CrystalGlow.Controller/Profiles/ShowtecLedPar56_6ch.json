@@ -1,0 +1,11 @@
+{
+  "Name": "Showtec LED Par 56 (6ch)",
+  "Channels": [
+    { "Name": "Red", "Offset": 0 },
+    { "Name": "Green", "Offset": 1 },
+    { "Name": "Blue", "Offset": 2 },
+    { "Name": "Full Color", "Offset": 3 },
+    { "Name": "Strobe/Speed", "Offset": 4 },
+    { "Name": "Modi (0-63=RGB)", "Offset": 5 }
+  ]
+}

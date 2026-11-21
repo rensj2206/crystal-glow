@@ -1,0 +1,9 @@
+{
+  "Name": "Generic RGBW Par",
+  "Channels": [
+    { "Name": "Red", "Offset": 0 },
+    { "Name": "Green", "Offset": 1 },
+    { "Name": "Blue", "Offset": 2 },
+    { "Name": "White", "Offset": 3 }
+  ]
+}
