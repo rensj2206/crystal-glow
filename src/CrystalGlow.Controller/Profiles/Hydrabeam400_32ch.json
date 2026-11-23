@@ -1,0 +1,34 @@
+{
+  "Name": "Hydrabeam 400 RGBW (32ch mode)",
+  "Channels": [
+    { "Name": "Dimmer All", "Offset": 0 },
+    { "Name": "Strobe All (0-10=open, 11-255=strobe 1-20Hz)", "Offset": 1 },
+
+    { "Name": "Head 1 Pan (16-bit)", "Offset": 2, "FineOffset": 3 },
+    { "Name": "Head 1 Tilt (16-bit)", "Offset": 4, "FineOffset": 5 },
+    { "Name": "Head 1 Speed (0-10=fast, 11-255=slow-fast)", "Offset": 6 },
+    { "Name": "Head 1 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 7 },
+
+    { "Name": "Head 2 Pan (16-bit)", "Offset": 8, "FineOffset": 9 },
+    { "Name": "Head 2 Tilt (16-bit)", "Offset": 10, "FineOffset": 11 },
+    { "Name": "Head 2 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 12 },
+    { "Name": "Head 2 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 13 },
+
+    { "Name": "Head 3 Pan (16-bit)", "Offset": 14, "FineOffset": 15 },
+    { "Name": "Head 3 Tilt (16-bit)", "Offset": 16, "FineOffset": 17 },
+    { "Name": "Head 3 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 18 },
+    { "Name": "Head 3 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 19 },
+
+    { "Name": "Head 4 Pan (16-bit)", "Offset": 20, "FineOffset": 21 },
+    { "Name": "Head 4 Tilt (16-bit)", "Offset": 22, "FineOffset": 23 },
+    { "Name": "Head 4 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 24 },
+    { "Name": "Head 4 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 25 },
+
+    { "Name": "Sound Mode / Reset (200-209=reset, 241-255=sound)", "Offset": 26 },
+    { "Name": "Sound Sensitivity All", "Offset": 27 },
+    { "Name": "Red All", "Offset": 28 },
+    { "Name": "Green All", "Offset": 29 },
+    { "Name": "Blue All", "Offset": 30 },
+    { "Name": "White All", "Offset": 31 }
+  ]
+}

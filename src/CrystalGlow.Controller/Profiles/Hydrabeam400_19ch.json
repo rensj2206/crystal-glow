@@ -1,0 +1,29 @@
+{
+  "Name": "Hydrabeam 400 RGBW (19ch mode)",
+  "Channels": [
+    { "Name": "Dimmer All", "Offset": 0 },
+    { "Name": "Strobe All (0-10=open, 11-255=strobe 1-20Hz)", "Offset": 1 },
+    { "Name": "Red All", "Offset": 2 },
+    { "Name": "Green All", "Offset": 3 },
+    { "Name": "Blue All", "Offset": 4 },
+    { "Name": "White All", "Offset": 5 },
+
+    { "Name": "Head 1 Pan (8-bit)", "Offset": 6 },
+    { "Name": "Head 1 Tilt (8-bit)", "Offset": 7 },
+    { "Name": "Head 1 Dimmer", "Offset": 8 },
+
+    { "Name": "Head 2 Pan (8-bit)", "Offset": 9 },
+    { "Name": "Head 2 Tilt (8-bit)", "Offset": 10 },
+    { "Name": "Head 2 Dimmer", "Offset": 11 },
+
+    { "Name": "Head 3 Pan (8-bit)", "Offset": 12 },
+    { "Name": "Head 3 Tilt (8-bit)", "Offset": 13 },
+    { "Name": "Head 3 Dimmer", "Offset": 14 },
+
+    { "Name": "Head 4 Pan (8-bit)", "Offset": 15 },
+    { "Name": "Head 4 Tilt (8-bit)", "Offset": 16 },
+    { "Name": "Head 4 Dimmer", "Offset": 17 },
+
+    { "Name": "Head Speed", "Offset": 18 }
+  ]
+}

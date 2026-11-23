@@ -60,4 +60,15 @@ rebuilding blind.
 
 Until then, this remains untested
 
-This is the current version on GitHub
+This is the current version on GitHub 
+
+### Day 6 - Sunday 22/10/2026 
+
+No work done today 
+
+### Day 7 - Monday 23/10/2026 
+
+Working prototype accomplished on the Hydrabeam 400s
+The ShowTecs are still are gamble of sorts. Sometimes they work, sometimes they don't. The DMX signal is being sent to them, 
+but they don't always respond, and can at times switch to their automatic pre-programmed lightshow. 
+Hydrabeams so far have only been tested in their 6ch mode for simplicities sake, but we soon will begin testing their 56ch mode.

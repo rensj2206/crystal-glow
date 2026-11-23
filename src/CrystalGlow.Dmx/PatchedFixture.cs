@@ -26,5 +26,19 @@ public class PatchedFixture
 
     public byte GetChannel(int offset) => _universe.Get(StartAddress + offset);
 
+    /// <summary>
+    /// Write a 16-bit value across a coarse+fine channel pair (e.g. pan/tilt).
+    /// coarseOffset gets the high byte, fineOffset gets the low byte.
+    /// </summary>
+    public void SetChannel16(int coarseOffset, int fineOffset, ushort value)
+    {
+        SetChannel(coarseOffset, (byte)(value >> 8));
+        SetChannel(fineOffset, (byte)(value & 0xFF));
+    }
+
+    /// <summary>Read back a 16-bit value written with SetChannel16.</summary>
+    public ushort GetChannel16(int coarseOffset, int fineOffset) =>
+        (ushort)((GetChannel(coarseOffset) << 8) | GetChannel(fineOffset));
+
     public override string ToString() => $"{Label} — {Profile.Name} @ {StartAddress}";
 }

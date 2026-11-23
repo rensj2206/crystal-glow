@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using CrystalGlow.Dmx;
 
 namespace CrystalGlow.Controller;
@@ -198,27 +199,82 @@ public partial class MainWindow : Window
 
             var valueLabel = new TextBlock
             {
-                Width = 40,
+                MinWidth = 48,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(8, 0, 0, 0),
-                Text = fixture.GetChannel(channel.Offset).ToString()
+                Margin = new Thickness(8, 0, 0, 0)
             };
 
-            var slider = new Slider
-            {
-                Minimum = 0,
-                Maximum = 255,
-                Width = 300,
-                Value = fixture.GetChannel(channel.Offset),
-                VerticalAlignment = VerticalAlignment.Center
-            };
+            Slider slider;
 
-            slider.ValueChanged += (_, args) =>
+            if (channel.HasOptions)
             {
-                var value = (byte)args.NewValue;
-                fixture.SetChannel(channel.Offset, value);
-                valueLabel.Text = value.ToString();
-            };
+                var options = channel.Options!;
+                var initialIndex = channel.OptionIndexForValue(fixture.GetChannel(channel.Offset));
+                valueLabel.Text = options[initialIndex].Name;
+
+                slider = new Slider
+                {
+                    Minimum = 0,
+                    Maximum = options.Count - 1,
+                    Width = 300,
+                    Value = initialIndex,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    TickFrequency = 1,
+                    IsSnapToTickEnabled = true,
+                    TickPlacement = TickPlacement.BottomRight
+                };
+
+                slider.ValueChanged += (_, args) =>
+                {
+                    var index = (int)Math.Round(args.NewValue);
+                    var option = options[index];
+                    fixture.SetChannel(channel.Offset, (byte)option.RepresentativeValue);
+                    valueLabel.Text = option.Name;
+                };
+            }
+            else if (channel.Is16Bit)
+            {
+                var fineOffset = channel.FineOffset!.Value;
+                var initial = fixture.GetChannel16(channel.Offset, fineOffset);
+                valueLabel.Text = initial.ToString();
+
+                slider = new Slider
+                {
+                    Minimum = 0,
+                    Maximum = 65535,
+                    Width = 300,
+                    Value = initial,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                slider.ValueChanged += (_, args) =>
+                {
+                    var value = (ushort)args.NewValue;
+                    fixture.SetChannel16(channel.Offset, fineOffset, value);
+                    valueLabel.Text = value.ToString();
+                };
+            }
+            else
+            {
+                var initial = fixture.GetChannel(channel.Offset);
+                valueLabel.Text = initial.ToString();
+
+                slider = new Slider
+                {
+                    Minimum = 0,
+                    Maximum = 255,
+                    Width = 300,
+                    Value = initial,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                slider.ValueChanged += (_, args) =>
+                {
+                    var value = (byte)args.NewValue;
+                    fixture.SetChannel(channel.Offset, value);
+                    valueLabel.Text = value.ToString();
+                };
+            }
 
             row.Children.Add(nameLabel);
             row.Children.Add(slider);

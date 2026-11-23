@@ -1,11 +1,55 @@
 {
   "Name": "Hydrabeam 400 RGBW (6ch mode)",
   "Channels": [
-    { "Name": "Master Dimmer", "Offset": 0 },
-    { "Name": "Strobe (0-10=off, 11-255=slow-fast)", "Offset": 1 },
-    { "Name": "Show Mode (0-7=off, 248-255=sound)", "Offset": 2 },
-    { "Name": "Show Speed / Sound Sensitivity", "Offset": 3 },
-    { "Name": "Light Control (0-30=auto, 31-255=macro)", "Offset": 4 },
+    { "Name": "Dimmer All", "Offset": 0 },
+    { "Name": "Strobe All (0-10=open, 11-255=strobe 1-20Hz)", "Offset": 1 },
+    {
+      "Name": "Show Mode All",
+      "Offset": 2,
+      "Options": [
+        { "Name": "No movement", "Min": 0, "Max": 7 },
+        { "Name": "Show mode 1", "Min": 8, "Max": 22 },
+        { "Name": "Show mode 2", "Min": 23, "Max": 37 },
+        { "Name": "Show mode 3", "Min": 38, "Max": 52 },
+        { "Name": "Show mode 4", "Min": 53, "Max": 67 },
+        { "Name": "Show mode 5", "Min": 68, "Max": 82 },
+        { "Name": "Show mode 6", "Min": 83, "Max": 97 },
+        { "Name": "Show mode 7", "Min": 98, "Max": 112 },
+        { "Name": "Show mode 8", "Min": 113, "Max": 127 },
+        { "Name": "Show mode 9", "Min": 128, "Max": 142 },
+        { "Name": "Show mode 10", "Min": 143, "Max": 157 },
+        { "Name": "Show mode 11", "Min": 158, "Max": 172 },
+        { "Name": "Show mode 12", "Min": 173, "Max": 187 },
+        { "Name": "Show mode 13", "Min": 188, "Max": 202 },
+        { "Name": "Show mode 14", "Min": 203, "Max": 217 },
+        { "Name": "Show mode 15", "Min": 218, "Max": 232 },
+        { "Name": "Show mode 16", "Min": 233, "Max": 247 },
+        { "Name": "Sound control mode", "Min": 248, "Max": 255 }
+      ]
+    },
+    { "Name": "Show Speed All / Sound Sensitivity All", "Offset": 3 },
+    {
+      "Name": "Light Control",
+      "Offset": 4,
+      "Options": [
+        { "Name": "Auto colour change", "Min": 0, "Max": 30 },
+        { "Name": "Red", "Min": 31, "Max": 45 },
+        { "Name": "Green", "Min": 46, "Max": 60 },
+        { "Name": "Blue", "Min": 61, "Max": 75 },
+        { "Name": "White", "Min": 76, "Max": 90 },
+        { "Name": "Red + Green", "Min": 91, "Max": 105 },
+        { "Name": "Red + Blue", "Min": 106, "Max": 120 },
+        { "Name": "Red + White", "Min": 121, "Max": 135 },
+        { "Name": "Green + Blue", "Min": 136, "Max": 150 },
+        { "Name": "Green + White", "Min": 151, "Max": 165 },
+        { "Name": "Blue + White", "Min": 166, "Max": 180 },
+        { "Name": "Red + Green + Blue", "Min": 181, "Max": 195 },
+        { "Name": "Red + Green + White", "Min": 196, "Max": 210 },
+        { "Name": "Red + Blue + White", "Min": 211, "Max": 225 },
+        { "Name": "Green + Blue + White", "Min": 226, "Max": 240 },
+        { "Name": "Red + Green + Blue + White", "Min": 241, "Max": 255 }
+      ]
+    },
     { "Name": "Auto Colour Change Speed", "Offset": 5 }
   ]
 }

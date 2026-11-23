@@ -1,0 +1,13 @@
+{
+  "Name": "Hydrabeam 400 RGBW (10ch mode)",
+  "Channels": [
+    { "Name": "Pan All (0-540deg, 16-bit)", "Offset": 0, "FineOffset": 8 },
+    { "Name": "Tilt All (0-270deg, 16-bit)", "Offset": 1, "FineOffset": 9 },
+    { "Name": "Dimmer All", "Offset": 2 },
+    { "Name": "Strobe All (0-10=open, 11-255=strobe 1-20Hz)", "Offset": 3 },
+    { "Name": "Show Mode All (0-7=off, 8-247=modes 1-16, 248-255=sound)", "Offset": 4 },
+    { "Name": "Show Speed All / Sound Sensitivity All", "Offset": 5 },
+    { "Name": "Light Control (0-30=auto colour change, 31-255=colour preset)", "Offset": 6 },
+    { "Name": "Auto Colour Change Speed", "Offset": 7 }
+  ]
+}
