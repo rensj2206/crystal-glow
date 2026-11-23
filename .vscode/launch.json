@@ -13,13 +13,24 @@
             "stopAtEntry": false
         },
         {
-            "name": "Diagnostic (COM6, address 1)",
+            "name": "Diagnostic (COM6, address 1, raw)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/CrystalGlow.Diagnostic/bin/Debug/net10.0/CrystalGlow.Diagnostic.dll",
-            "args": ["COM6", "1"],
+            "args": ["COM6", "1", "raw"],
             "cwd": "${workspaceFolder}/src/CrystalGlow.Diagnostic",
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Listener (COM7)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/CrystalGlow.Listener/bin/Debug/net10.0/CrystalGlow.Listener.dll",
+            "args": ["COM7"],
+            "cwd": "${workspaceFolder}/src/CrystalGlow.Listener",
             "console": "integratedTerminal",
             "stopAtEntry": false
         },
