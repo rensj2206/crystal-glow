@@ -35,14 +35,23 @@
 
                 <TextBlock Text="Patched fixtures:" FontWeight="Bold" Margin="0,0,0,4"/>
                 <ListBox x:Name="PatchListBox" Height="260" SelectionChanged="PatchListBox_SelectionChanged"/>
+                <Button Content="Remove Selected Fixture" Click="RemoveFixture_Click" Margin="0,8,0,0" Padding="4"/>
             </StackPanel>
 
             <!-- Right: channel controls for the selected fixture -->
             <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
-                <StackPanel>
-                    <TextBlock x:Name="SelectedFixtureHeader" Text="No fixture selected" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                    <ItemsControl x:Name="ChannelsPanel"/>
-                </StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" x:Name="SelectedFixtureHeader" Text="No fixture selected" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="ChannelsPanel"/>
+                    </ScrollViewer>
+                </Grid>
             </Border>
         </Grid>
 

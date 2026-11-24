@@ -7,24 +7,117 @@
     { "Name": "Head 1 Pan (16-bit)", "Offset": 2, "FineOffset": 3 },
     { "Name": "Head 1 Tilt (16-bit)", "Offset": 4, "FineOffset": 5 },
     { "Name": "Head 1 Speed (0-10=fast, 11-255=slow-fast)", "Offset": 6 },
-    { "Name": "Head 1 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 7 },
+    {
+      "Name": "Head 1 Colour",
+      "Offset": 7,
+      "Options": [
+        { "Name": "Use master RGBW", "Min": 0, "Max": 30 },
+        { "Name": "Red", "Min": 31, "Max": 45 },
+        { "Name": "Green", "Min": 46, "Max": 60 },
+        { "Name": "Blue", "Min": 61, "Max": 75 },
+        { "Name": "White", "Min": 76, "Max": 90 },
+        { "Name": "Red + Green", "Min": 91, "Max": 105 },
+        { "Name": "Red + Blue", "Min": 106, "Max": 120 },
+        { "Name": "Red + White", "Min": 121, "Max": 135 },
+        { "Name": "Green + Blue", "Min": 136, "Max": 150 },
+        { "Name": "Green + White", "Min": 151, "Max": 165 },
+        { "Name": "Blue + White", "Min": 166, "Max": 180 },
+        { "Name": "Red + Green + Blue", "Min": 181, "Max": 195 },
+        { "Name": "Red + Green + White", "Min": 196, "Max": 210 },
+        { "Name": "Red + Blue + White", "Min": 211, "Max": 225 },
+        { "Name": "Green + Blue + White", "Min": 226, "Max": 240 },
+        { "Name": "Red + Green + Blue + White", "Min": 241, "Max": 255 }
+      ]
+    },
 
     { "Name": "Head 2 Pan (16-bit)", "Offset": 8, "FineOffset": 9 },
     { "Name": "Head 2 Tilt (16-bit)", "Offset": 10, "FineOffset": 11 },
     { "Name": "Head 2 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 12 },
-    { "Name": "Head 2 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 13 },
+    {
+      "Name": "Head 2 Colour",
+      "Offset": 13,
+      "Options": [
+        { "Name": "Use master RGBW", "Min": 0, "Max": 30 },
+        { "Name": "Red", "Min": 31, "Max": 45 },
+        { "Name": "Green", "Min": 46, "Max": 60 },
+        { "Name": "Blue", "Min": 61, "Max": 75 },
+        { "Name": "White", "Min": 76, "Max": 90 },
+        { "Name": "Red + Green", "Min": 91, "Max": 105 },
+        { "Name": "Red + Blue", "Min": 106, "Max": 120 },
+        { "Name": "Red + White", "Min": 121, "Max": 135 },
+        { "Name": "Green + Blue", "Min": 136, "Max": 150 },
+        { "Name": "Green + White", "Min": 151, "Max": 165 },
+        { "Name": "Blue + White", "Min": 166, "Max": 180 },
+        { "Name": "Red + Green + Blue", "Min": 181, "Max": 195 },
+        { "Name": "Red + Green + White", "Min": 196, "Max": 210 },
+        { "Name": "Red + Blue + White", "Min": 211, "Max": 225 },
+        { "Name": "Green + Blue + White", "Min": 226, "Max": 240 },
+        { "Name": "Red + Green + Blue + White", "Min": 241, "Max": 255 }
+      ]
+    },
 
     { "Name": "Head 3 Pan (16-bit)", "Offset": 14, "FineOffset": 15 },
     { "Name": "Head 3 Tilt (16-bit)", "Offset": 16, "FineOffset": 17 },
     { "Name": "Head 3 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 18 },
-    { "Name": "Head 3 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 19 },
+    {
+      "Name": "Head 3 Colour",
+      "Offset": 19,
+      "Options": [
+        { "Name": "Use master RGBW", "Min": 0, "Max": 30 },
+        { "Name": "Red", "Min": 31, "Max": 45 },
+        { "Name": "Green", "Min": 46, "Max": 60 },
+        { "Name": "Blue", "Min": 61, "Max": 75 },
+        { "Name": "White", "Min": 76, "Max": 90 },
+        { "Name": "Red + Green", "Min": 91, "Max": 105 },
+        { "Name": "Red + Blue", "Min": 106, "Max": 120 },
+        { "Name": "Red + White", "Min": 121, "Max": 135 },
+        { "Name": "Green + Blue", "Min": 136, "Max": 150 },
+        { "Name": "Green + White", "Min": 151, "Max": 165 },
+        { "Name": "Blue + White", "Min": 166, "Max": 180 },
+        { "Name": "Red + Green + Blue", "Min": 181, "Max": 195 },
+        { "Name": "Red + Green + White", "Min": 196, "Max": 210 },
+        { "Name": "Red + Blue + White", "Min": 211, "Max": 225 },
+        { "Name": "Green + Blue + White", "Min": 226, "Max": 240 },
+        { "Name": "Red + Green + Blue + White", "Min": 241, "Max": 255 }
+      ]
+    },
 
     { "Name": "Head 4 Pan (16-bit)", "Offset": 20, "FineOffset": 21 },
     { "Name": "Head 4 Tilt (16-bit)", "Offset": 22, "FineOffset": 23 },
     { "Name": "Head 4 Speed (0-10=use Head1, 11-255=slow-fast)", "Offset": 24 },
-    { "Name": "Head 4 Colour (0-30=use master RGBW, 31-255=preset)", "Offset": 25 },
+    {
+      "Name": "Head 4 Colour",
+      "Offset": 25,
+      "Options": [
+        { "Name": "Use master RGBW", "Min": 0, "Max": 30 },
+        { "Name": "Red", "Min": 31, "Max": 45 },
+        { "Name": "Green", "Min": 46, "Max": 60 },
+        { "Name": "Blue", "Min": 61, "Max": 75 },
+        { "Name": "White", "Min": 76, "Max": 90 },
+        { "Name": "Red + Green", "Min": 91, "Max": 105 },
+        { "Name": "Red + Blue", "Min": 106, "Max": 120 },
+        { "Name": "Red + White", "Min": 121, "Max": 135 },
+        { "Name": "Green + Blue", "Min": 136, "Max": 150 },
+        { "Name": "Green + White", "Min": 151, "Max": 165 },
+        { "Name": "Blue + White", "Min": 166, "Max": 180 },
+        { "Name": "Red + Green + Blue", "Min": 181, "Max": 195 },
+        { "Name": "Red + Green + White", "Min": 196, "Max": 210 },
+        { "Name": "Red + Blue + White", "Min": 211, "Max": 225 },
+        { "Name": "Green + Blue + White", "Min": 226, "Max": 240 },
+        { "Name": "Red + Green + Blue + White", "Min": 241, "Max": 255 }
+      ]
+    },
 
-    { "Name": "Sound Mode / Reset (200-209=reset, 241-255=sound)", "Offset": 26 },
+    {
+      "Name": "Sound Mode / Reset",
+      "Offset": 26,
+      "Options": [
+        { "Name": "No function", "Min": 0, "Max": 199 },
+        { "Name": "Reset", "Min": 200, "Max": 209 },
+        { "Name": "No function", "Min": 210, "Max": 240 },
+        { "Name": "Sound control mode", "Min": 241, "Max": 255 }
+      ]
+    },
     { "Name": "Sound Sensitivity All", "Offset": 27 },
     { "Name": "Red All", "Offset": 28 },
     { "Name": "Green All", "Offset": 29 },

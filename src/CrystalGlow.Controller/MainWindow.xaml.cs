@@ -169,6 +169,31 @@ public partial class MainWindow : Window
         PatchListBox.ItemsSource = _patch;
     }
 
+    /// <summary>
+    /// Un-patches the selected fixture. Also zeroes its channel range in
+    /// the universe on the way out, so stale values don't keep going out
+    /// on the wire for addresses nothing is patched to anymore -- unless
+    /// another patched fixture overlaps the same addresses, in which
+    /// case that one's values win, same as always.
+    /// </summary>
+    private void RemoveFixture_Click(object sender, RoutedEventArgs e)
+    {
+        if (PatchListBox.SelectedItem is not PatchedFixture fixture)
+        {
+            MessageBox.Show("Select a patched fixture to remove first.");
+            return;
+        }
+
+        for (var offset = 0; offset < fixture.Profile.ChannelCount; offset++)
+            fixture.SetChannel(offset, 0);
+
+        _patch.Remove(fixture);
+        RefreshPatchList();
+
+        SelectedFixtureHeader.Text = "No fixture selected";
+        ChannelsPanel.ItemsSource = null;
+    }
+
     private void PatchListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (PatchListBox.SelectedItem is not PatchedFixture fixture)
