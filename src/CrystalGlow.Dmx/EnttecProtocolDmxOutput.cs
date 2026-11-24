@@ -5,7 +5,6 @@ namespace CrystalGlow.Dmx;
 /// <summary>
 /// Sends DMX frames using the Enttec "DMX USB PRO" framed packet
 /// protocol, rather than raw DMX512 bit-banging over the serial line.
-///
 /// A LOT of cheap USB-to-DMX dongles (including many CP210x-based ones
 /// sold generically as "USB to DMX512 interface") are not a bare
 /// USB-serial-to-RS485 wire at all -- they have their own onboard
@@ -17,22 +16,16 @@ namespace CrystalGlow.Dmx;
 /// bit-banging approach was never going to work, however precisely
 /// tuned, because the device was never listening for raw DMX timing on
 /// the wire -- it wanted packets.
-///
 /// Packet format (Enttec DMX USB PRO API, widely cloned):
 ///   [0x7E] [label] [length lo] [length hi] [data...] [0xE7]
 /// Label 6 = "Output Only Send DMX Packet request". Data is the DMX
 /// start code (0x00) followed by up to 512 channel values.
-///
 /// The serial baud rate used to reach the dongle over USB is NOT the
 /// 250000 DMX baud -- that's irrelevant here since the dongle's firmware
 /// is doing the real DMX timing on its own output; the host<->dongle
 /// link just carries the framed packet. 57600 is the most commonly used
 /// default across Enttec-protocol implementations and clones; change
 /// DongleLinkBaudRate if your dongle needs a different one.
-///
-/// UNVERIFIED AGAINST REAL HARDWARE -- built without the fixture
-/// available to test. Try this against SerialDmxOutput (the raw
-/// bit-banged approach) when hardware is back.
 /// </summary>
 public class EnttecProtocolDmxOutput : IDmxOutput
 {
