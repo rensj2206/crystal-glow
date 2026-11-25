@@ -27,7 +27,7 @@ public partial class MainWindow : Window
     private readonly SequencePlayer _sequencePlayer = new();
     private readonly Dictionary<PatchedFixture, HashSet<int>> _linkedHeadNumbers = new();
     private readonly Dictionary<PatchedFixture, HashSet<int>> _invertedHeadNumbers = new();
-    private readonly Dictionary<ChannelDefinition, Slider> _channelSliders = new();
+    private readonly Dictionary<ChannelDefinition, LinkableControl> _channelControls = new();
     private bool _isApplyingLinkedChange;
 
     /// <summary>One selectable target for the sound-reactive engine: a specific channel on a specific patched fixture.</summary>
@@ -35,6 +35,14 @@ public partial class MainWindow : Window
     {
         public override string ToString() => $"{Fixture.Label} — {Channel.Name}";
     }
+
+    /// <summary>
+    /// Thin adapter so head-linking can read/write a channel's value
+    /// without caring whether that channel is drawn as a plain Slider or
+    /// a ratchet Knob -- both just need a gettable/settable numeric value
+    /// and a range to invert against.
+    /// </summary>
+    private sealed record LinkableControl(Func<double> GetValue, Action<double> SetValue, double Minimum, double Maximum);
 
     /// <summary>
     /// Which COM port the USB-DMX dongle enumerates as. Check Device
@@ -492,7 +500,7 @@ public partial class MainWindow : Window
         if (!_linkedHeadNumbers.TryGetValue(fixture, out var linkedHeads) || !linkedHeads.Contains(sourceHead.Value))
             return;
 
-        if (!_channelSliders.TryGetValue(sourceChannel, out var sourceSlider))
+        if (!_channelControls.TryGetValue(sourceChannel, out var sourceControl))
             return;
 
         var inverted = _invertedHeadNumbers.TryGetValue(fixture, out var invertedSet) ? invertedSet : new HashSet<int>();
@@ -500,7 +508,7 @@ public partial class MainWindow : Window
         // Normalize to a canonical "un-inverted" value first, so a drag on
         // an inverted head still propagates in the right direction to everyone else.
         var canonicalValue = inverted.Contains(sourceHead.Value)
-            ? Invert(rawValue, sourceSlider.Minimum, sourceSlider.Maximum)
+            ? Invert(rawValue, sourceControl.Minimum, sourceControl.Maximum)
             : rawValue;
 
         _isApplyingLinkedChange = true;
@@ -515,16 +523,16 @@ public partial class MainWindow : Window
                 if (targetHead is null || !linkedHeads.Contains(targetHead.Value))
                     continue;
 
-                if (!_channelSliders.TryGetValue(channel, out var slider))
+                if (!_channelControls.TryGetValue(channel, out var targetControl))
                     continue;
 
                 var targetValue = inverted.Contains(targetHead.Value)
-                    ? Invert(canonicalValue, slider.Minimum, slider.Maximum)
+                    ? Invert(canonicalValue, targetControl.Minimum, targetControl.Maximum)
                     : canonicalValue;
-                targetValue = Math.Clamp(targetValue, slider.Minimum, slider.Maximum);
+                targetValue = Math.Clamp(targetValue, targetControl.Minimum, targetControl.Maximum);
 
-                if (Math.Abs(slider.Value - targetValue) > 0.5)
-                    slider.Value = targetValue;
+                if (Math.Abs(targetControl.GetValue() - targetValue) > 0.5)
+                    targetControl.SetValue(targetValue);
             }
         }
         finally
@@ -632,7 +640,7 @@ public partial class MainWindow : Window
     private void BuildChannelControls(PatchedFixture fixture)
     {
         var rows = new List<UIElement>();
-        _channelSliders.Clear();
+        _channelControls.Clear();
 
         foreach (var channel in fixture.Profile.Channels.OrderBy(c => c.Offset))
         {
@@ -652,7 +660,7 @@ public partial class MainWindow : Window
                 Margin = new Thickness(8, 0, 0, 0)
             };
 
-            Slider slider;
+            FrameworkElement control;
 
             if (channel.HasOptions)
             {
@@ -660,7 +668,7 @@ public partial class MainWindow : Window
                 var initialIndex = channel.OptionIndexForValue(fixture.GetChannel(channel.Offset));
                 valueLabel.Text = options[initialIndex].Name;
 
-                slider = new Slider
+                var slider = new Slider
                 {
                     Minimum = 0,
                     Maximum = options.Count - 1,
@@ -680,6 +688,10 @@ public partial class MainWindow : Window
                     valueLabel.Text = option.Name;
                     PropagateLinkedValue(fixture, channel, index);
                 };
+
+                _channelControls[channel] = new LinkableControl(
+                    () => slider.Value, v => slider.Value = v, slider.Minimum, slider.Maximum);
+                control = slider;
             }
             else if (channel.Is16Bit)
             {
@@ -687,7 +699,7 @@ public partial class MainWindow : Window
                 var initial = fixture.GetChannel16(channel.Offset, fineOffset);
                 valueLabel.Text = initial.ToString();
 
-                slider = new Slider
+                var slider = new Slider
                 {
                     Minimum = 0,
                     Maximum = 65535,
@@ -703,13 +715,17 @@ public partial class MainWindow : Window
                     valueLabel.Text = value.ToString();
                     PropagateLinkedValue(fixture, channel, value);
                 };
+
+                _channelControls[channel] = new LinkableControl(
+                    () => slider.Value, v => slider.Value = v, slider.Minimum, slider.Maximum);
+                control = slider;
             }
             else
             {
                 var initial = fixture.GetChannel(channel.Offset);
                 valueLabel.Text = initial.ToString();
 
-                slider = new Slider
+                var slider = new Slider
                 {
                     Minimum = 0,
                     Maximum = 255,
@@ -725,11 +741,14 @@ public partial class MainWindow : Window
                     valueLabel.Text = value.ToString();
                     PropagateLinkedValue(fixture, channel, value);
                 };
+
+                _channelControls[channel] = new LinkableControl(
+                    () => slider.Value, v => slider.Value = v, slider.Minimum, slider.Maximum);
+                control = slider;
             }
 
-            _channelSliders[channel] = slider;
             row.Children.Add(nameLabel);
-            row.Children.Add(slider);
+            row.Children.Add(control);
             row.Children.Add(valueLabel);
             rows.Add(row);
         }

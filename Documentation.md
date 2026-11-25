@@ -214,3 +214,54 @@ Link/invert state is remembered per fixture, so switching between patched fixtur
 own setup. Has no effect on fixtures without repeated "Head N" channels (the Showtec par, for instance) -- no
 controls are even shown for those.
 
+**First custom-rendered control: a rotary knob for ratchet channels.** Started moving the UI off default plain
+WPF controls, beginning with a real design: a knurled rotary knob and a brushed-metal fader cap, modelled and
+rendered (top-down, transparent background) rather than drawn in code. Converted both from the rendered .webp
+to .png (via WPF's own WIC-based decoder, run once through a throwaway PowerShell snippet -- no extra tools
+needed) and added them under a new `Assets/` folder in the Controller project.
+
+Built a new `Knob` control (`Controls/Knob.xaml` + code-behind) using the knob render: drag up/down to turn it,
+rotating the image via a `RotateTransform` across a fixed -135° to +135° arc. It's a ratchet by design, same
+as the snapping sliders it replaces -- there's no continuous mode, since an options-based DMX channel (colour
+macros, show modes, etc.) is always a fixed menu of named settings, never a smooth range, so swapped it in for
+every `HasOptions` channel in the main channel panel (Colour channels on 32ch/56ch Hydrabeam modes, for
+instance) in place of the old snapping Slider.
+
+Doing this meant generalizing how head-linking reads/writes a channel's value -- it used to grab `Slider.Value`
+directly, which the new Knob doesn't have. Added a small `LinkableControl` adapter (get/set delegates + a range)
+so linking works identically whether a channel is drawn as a Slider or a Knob, without either control needing to
+know about the other.
+
+Not yet tested against real hardware -- next step is confirming the knob actually turns smoothly and lands on
+the right DMX value when dragged, and that it looks right against the rest of the UI (still plain sliders
+everywhere else for now; the fader cap render hasn't been wired in yet).
+
+**Transparency bug hunt.** The knob showed up in the app as a solid black diamond instead of a circular knob --
+looked like a background-removal failure. Traced it with a quick pixel check (decode the file, read a corner
+pixel's actual bytes) rather than guessing from how it looked: the very first renders had no alpha channel at
+all (`Bgr32`, solid black fill), which meant the webp export itself never had transparency, regardless of any
+Blender setting. After enabling Film -> Transparent in Blender and re-exporting, a second check *still* showed no
+alpha -- but by then the files were coming into this conversation as pasted chat images, and it turned out that
+path (not Blender) was the actual problem: pasting an image into chat re-encodes it as .webp for preview, which
+flattened the transparency regardless of what Blender had actually produced. Checking the real files directly
+from disk (`Knob.png`, `Dial.png`, `Button.Paused.png`, `Button.Playing.png`) confirmed all four were correctly
+`Bgra32` with real transparency -- Blender's output was fine the whole time. Lesson: when checking a rendered
+asset for transparency, check the actual file on disk, not a copy that's passed through a chat/preview pipeline.
+
+Also sorted out a naming mismatch between the Blender project and the WPF assets: on disk, `Knob.png` is
+actually the fader cap (rectangle + circle), and `Dial.png` is the rotary gear knob -- renamed/copied into
+`Assets/` the right way round (`Assets/Knob.png` = the gear dial, `Assets/FaderCap.png` = the rectangle cap) so
+the control code didn't need to change.
+
+Two new button-state renders also came in -- `ButtonPaused.png` (shows a play triangle, i.e. what you see while
+paused) and `ButtonPlaying.png` (shows a pause icon, i.e. what you see while playing) -- added to `Assets/` but
+not wired into any control yet.
+
+**Fader cap wired into every plain/16-bit slider.** Added three resources to `App.xaml`: a transparent
+RepeatButton style (so the track still responds to click-to-jump without drawing its own visual), a Thumb style
+that swaps in the rendered `FaderCap.png` as the draggable handle, and a `FaderSliderStyle` that replaces the
+whole default Slider look with a thin dark groove plus that custom thumb. Applied it to every channel slider
+that isn't a ratchet Knob (the plain 0-255 and 16-bit 0-65535 sliders), plus the sensitivity slider in the Sound
+Reactive panel. The ratchet (options-based) channels keep using the Knob control from before -- sliders and
+knobs are now visually distinct from each other, matching what they actually do.
+
