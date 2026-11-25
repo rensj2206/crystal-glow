@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrystalGlow.Controller"
         mc:Ignorable="d"
-        Title="Crystal Glow Controller" Height="600" Width="900">
+        Title="Crystal Glow Controller" Height="600" Width="900"
+        PreviewKeyDown="MainWindow_PreviewKeyDown">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -19,7 +20,8 @@
             </Grid.ColumnDefinitions>
 
             <!-- Left: patch panel -->
-            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+            <ScrollViewer Grid.Column="0" Margin="0,0,10,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
                 <TextBlock Text="Patch" FontWeight="Bold" FontSize="16" Margin="0,0,0,8"/>
 
                 <TextBlock Text="Fixture profile:"/>
@@ -36,7 +38,47 @@
                 <TextBlock Text="Patched fixtures:" FontWeight="Bold" Margin="0,0,0,4"/>
                 <ListBox x:Name="PatchListBox" Height="260" SelectionChanged="PatchListBox_SelectionChanged"/>
                 <Button Content="Remove Selected Fixture" Click="RemoveFixture_Click" Margin="0,8,0,0" Padding="4"/>
+
+                <TextBlock Text="Sound Reactive (prototype)" FontWeight="Bold" Margin="0,24,0,8"/>
+                <TextBlock Text="Target channel:"/>
+                <ComboBox x:Name="SoundTargetComboBox" Margin="0,0,0,8"/>
+                <Button x:Name="SoundReactiveToggleButton" Content="Start" Click="SoundReactiveToggle_Click" Padding="4"/>
+                <TextBlock Text="Live level:" Margin="0,8,0,2"/>
+                <ProgressBar x:Name="SoundLevelBar" Minimum="0" Maximum="255" Height="18"/>
+
+                <TextBlock Margin="0,8,0,2">
+                    <Run Text="Sensitivity: "/>
+                    <Run x:Name="SensitivityValueText" Text="1.0x"/>
+                </TextBlock>
+                <Slider x:Name="SensitivitySlider" Minimum="0.2" Maximum="3" Value="1" TickFrequency="0.1"
+                        ValueChanged="SensitivitySlider_ValueChanged"/>
+
+                <TextBlock Text="Sequence (prototype)" FontWeight="Bold" Margin="0,24,0,8"/>
+                <ListBox x:Name="SequenceStepsListBox" Height="120" Margin="0,0,0,8"/>
+
+                <TextBlock Text="Fade seconds (0 = sharp cut):"/>
+                <TextBox x:Name="StepFadeSecondsTextBox" Text="0" Margin="0,0,0,8"/>
+
+                <TextBlock Text="Hold seconds (before auto-advance):"/>
+                <TextBox x:Name="StepHoldSecondsTextBox" Text="1" Margin="0,0,0,8"/>
+
+                <Button Content="Capture Step from Selected Fixture" Click="CaptureStep_Click" Margin="0,0,0,4" Padding="4"/>
+                <Button Content="Remove Selected Step" Click="RemoveStep_Click" Margin="0,0,0,8" Padding="4"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SequencePlayToggleButton" Content="Play" Click="SequencePlayToggle_Click" Padding="4" Margin="0,0,4,0"/>
+                    <Button Content="Next Step" Click="SequenceNextStep_Click" Padding="4" Margin="0,0,4,0"/>
+                    <Button Content="Stop" Click="SequenceStop_Click" Padding="4"/>
+                </StackPanel>
+
+                <TextBlock Text="Keybinds" FontWeight="Bold" Margin="0,24,0,4"/>
+                <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="11">
+                    1-9 select patched fixture &#x2022; Space start/stop sound reactive &#x2022;
+                    +/- adjust sensitivity &#x2022; Del remove selected fixture &#x2022;
+                    N next sequence step &#x2022; P play/pause sequence
+                </TextBlock>
             </StackPanel>
+            </ScrollViewer>
 
             <!-- Right: channel controls for the selected fixture -->
             <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
@@ -46,7 +88,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" x:Name="SelectedFixtureHeader" Text="No fixture selected" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock x:Name="SelectedFixtureHeader" Text="No fixture selected" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
+                        <StackPanel x:Name="LinkHeadsPanel" Orientation="Horizontal" VerticalAlignment="Center"/>
+                    </StackPanel>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <ItemsControl x:Name="ChannelsPanel"/>

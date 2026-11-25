@@ -8,5 +8,6 @@
     <Project Path="src/CrystalGlow.Diagnostic/CrystalGlow.Diagnostic.csproj" />
     <Project Path="src/CrystalGlow.Dmx/CrystalGlow.Dmx.csproj" />
     <Project Path="src/CrystalGlow.Listener/CrystalGlow.Listener.csproj" />
+    <Project Path="src/CrystalGlow.SoundReactive/CrystalGlow.SoundReactive.csproj" />
   </Folder>
 </Solution>
